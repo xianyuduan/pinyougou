@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularjs自定义模块</title>
+    <script src="../../plugins/angularjs/angular.min.js"></script>
+    <script>
+        var app=angular.module("myApp", []);
+        app.controller("myController",function ($scope) {
+            $scope.username="传智播客"
+        })
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+    姓名:<input type="text" ng-model="username">
+    输入的姓名为:{{username}}
+</body>
+</html>

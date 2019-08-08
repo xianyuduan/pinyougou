@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularjs循环对象数组指令</title>
+    <script src="../../plugins/angularjs/angular.min.js"></script>
+    <script>
+        var app=angular.module("myApp", []);
+        app.controller("myController",function ($scope) {
+            $scope.users=[
+                {id:"001",name:"张三",age:24},
+                {id:"002",name:"李四",age:14}
+            ]
+        })
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+   <table>
+       <tr>
+           <th>序号</th>
+           <th>id</th>
+           <th>姓名</th>
+           <th>年龄</th>
+       </tr>
+       <tr ng-repeat="user in users">
+           <td>{{$index+1}}</td>
+           <td>{{user.id}}</td>
+           <td>{{user.name}}</td>
+           <td>{{user.age}}</td>
+       </tr>
+   </table>
+</body>
+</html>

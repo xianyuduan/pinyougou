@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularjs循环数组指令</title>
+    <script src="../../plugins/angularjs/angular.min.js"></script>
+    <script>
+        var app=angular.module("myApp", []);
+        app.controller("myController",function ($scope) {
+            $scope.user=["001","张三",24]
+        })
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+   <ul>
+       <li ng-repeat="info in user">
+           {{info}}
+       </li>
+   </ul>
+</body>
+</html>

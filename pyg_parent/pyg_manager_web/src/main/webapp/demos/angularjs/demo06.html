@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularjs事件指令</title>
+    <script src="../../plugins/angularjs/angular.min.js"></script>
+    <script>
+        var app=angular.module("myApp", []);
+        app.controller("myController",function ($scope) {
+            $scope.initUsername=function () {
+                $scope.username="张三"
+            };
+            $scope.reset=function () {
+                $scope.username = "";
+            }
+        })
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController" ng-init="initUsername()">
+    姓名:<input ng-model="username"><input type="button" value="重置" ng-click="reset()"><br>
+    输入的姓名为:{{username}}
+</body>
+</html>

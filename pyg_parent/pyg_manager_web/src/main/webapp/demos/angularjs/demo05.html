@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularjs初始化指令</title>
+    <script src="../../plugins/angularjs/angular.min.js"></script>
+    <script>
+        var app=angular.module("myApp", []);
+        app.controller("myController",function ($scope) {
+            $scope.initUsername=function () {
+                $scope.username="张三"
+            }
+        })
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController" ng-init="initUsername()">
+    姓名:<input type="text" ng-model="username">
+    输入的姓名为:{{username}}
+</body>
+</html>
