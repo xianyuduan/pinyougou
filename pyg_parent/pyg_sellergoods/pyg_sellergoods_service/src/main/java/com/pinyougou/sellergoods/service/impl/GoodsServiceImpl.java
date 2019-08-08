@@ -100,10 +100,14 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	/**
 	 * 修改
+	 * @param goods
 	 */
 	@Override
-	public void update(TbGoods goods){
-		goodsMapper.updateByPrimaryKey(goods);
+	public void update(Goods goods){
+		Long id = goods.getTbGoods().getId();
+		Long[] ids = {id};
+		delete(ids);
+		add(goods);
 	}	
 	
 	/**
@@ -112,8 +116,14 @@ public class GoodsServiceImpl implements GoodsService {
 	 * @return
 	 */
 	@Override
-	public TbGoods findOne(Long id){
-		return goodsMapper.selectByPrimaryKey(id);
+	public Goods findOne(Long id){
+		TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
+		TbGoodsDesc tbGoodsDesc = tbGoodsDescMapper.selectByPrimaryKey(id);
+		TbItemExample example=new TbItemExample();
+		TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andGoodsIdEqualTo(id);
+		List<TbItem> tbItems = tbItemMapper.selectByExample(example);
+		return new Goods(tbGoods, tbGoodsDesc, tbItems);
 	}
 
 	/**
@@ -124,8 +134,12 @@ public class GoodsServiceImpl implements GoodsService {
 		TbGoods tbGoods = new TbGoods();
 		tbGoods.setIsDelete("1");
 		for (Long id : ids) {
-			tbGoods.setId(id);
-			goodsMapper.updateByPrimaryKeySelective(tbGoods);
+			goodsMapper.deleteByPrimaryKey(id);
+			tbGoodsDescMapper.deleteByPrimaryKey(id);
+			TbItemExample example=new TbItemExample();
+			TbItemExample.Criteria criteria = example.createCriteria();
+			criteria.andGoodsIdEqualTo(id);
+			tbItemMapper.deleteByExample(example);
 		}		
 	}
 	

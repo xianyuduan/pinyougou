@@ -56,7 +56,12 @@ public class GoodsController {
 		try {
 			String name = SecurityContextHolder.getContext().getAuthentication().getName();
 			goods.getTbGoods().setSellerId(name);
-			goodsService.add(goods);
+			if (goods.getTbGoods().getId() == null) {
+				goodsService.add(goods);
+			} else {
+				goodsService.update(goods);
+			}
+
 			return new Result(true, "增加成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,16 +74,7 @@ public class GoodsController {
 	 * @param goods
 	 * @return
 	 */
-	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
-		try {
-			goodsService.update(goods);
-			return new Result(true, "修改成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result(false, "修改失败");
-		}
-	}	
+
 	
 	/**
 	 * 获取实体
@@ -86,7 +82,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/findOne/{id}")
-	public TbGoods findOne(@PathVariable("id") Long id){
+	public Goods findOne(@PathVariable("id") Long id){
 		return goodsService.findOne(id);		
 	}
 	

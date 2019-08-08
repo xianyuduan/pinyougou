@@ -1,6 +1,6 @@
 //控制层 
 app.controller('goodsController',
-    function ($scope, $controller, goodsService, itemCatService, typeTemplateService, uploadService, specificationService) {
+    function ($scope, $controller, goodsService, itemCatService, typeTemplateService, uploadService, specificationService,$location) {
 
         $controller('baseController', {
             $scope: $scope
@@ -23,9 +23,25 @@ app.controller('goodsController',
         };
 
         // 查询实体
-        $scope.findOne = function (id) {
-            goodsService.findOne(id).success(function (response) {
+
+        $scope.findOne = function () {
+            goodsService.findOne($location.search().id).success(function (response) {
                 $scope.entity = response;
+                $scope.entity.goodsDesc.itemImages=JSON.parse($scope.entity.goodsDesc.itemImages);
+                $scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.entity.goodsDesc.customAttributeItems);
+                $scope.entity.goodsDesc.specificationItems=JSON.parse($scope.entity.goodsDesc.specificationItems);
+                $scope.specName = '';
+                for(var i=0;i<$scope.entity.itemList.length;i++) {
+                    $scope.specName+=$scope.entity.itemList[i].spec
+                    $scope.entity.itemList[i].spec=JSON.parse($scope.entity.itemList[i].spec);
+                }
+                editor.html($scope.entity.goodsDesc.introduction);
+                itemCatService.findByParentId($scope.entity.tbGoods.category1Id).success(function (res) {
+                    $scope.category2 = res;
+                });
+                itemCatService.findByParentId($scope.entity.tbGoods.category2Id).success(function (res) {
+                    $scope.category3 = res;
+                });
             });
         };
 
@@ -73,6 +89,9 @@ app.controller('goodsController',
         $scope.findCategory1 = function (parentId) {
             itemCatService.findByParentId(parentId).success(function (res) {
                 $scope.category1 = res;
+                if($location.search().id!=undefined) {
+                    $scope.findOne();
+                }
                 //$scope.category2 = [];
                 //$scope.category3 = [];
                 //$scope.entity.tbGoods.typeTemplateId = "";
@@ -82,62 +101,74 @@ app.controller('goodsController',
 
         //二级分类列表
         $scope.$watch('entity.tbGoods.category1Id', function (newValue, oldValue) {
-            if(newValue==-1) {
-                $scope.category2 = [];
-                $scope.entity.tbGoods.category2Id = -1;
-            }else {
+            if(oldValue!=undefined) {
+                if (newValue == -1) {
+                    $scope.category2 = [];
+                    $scope.entity.tbGoods.category2Id = -1;
+                } else {
+                    if (newValue != undefined) {
+                        itemCatService.findByParentId(newValue).success(function (res) {
+                            $scope.category2 = res;
+                            //$scope.category3 = [];
+                            //$scope.entity.tbGoods.typeTemplateId = "";
+                            //$scope.brandList = [];
+                            $scope.entity.tbGoods.category2Id = -1;
+                        })
+                    }
+                }
+            }
+        });
+
+        //三级分类列表
+        $scope.$watch("entity.tbGoods.category2Id", function (newValue, oldValue) {
+            if(oldValue!=undefined) {
                 if (newValue != undefined) {
                     itemCatService.findByParentId(newValue).success(function (res) {
-                        $scope.category2 = res;
-                        //$scope.category3 = [];
+                        $scope.category3 = res;
                         //$scope.entity.tbGoods.typeTemplateId = "";
                         //$scope.brandList = [];
-                        $scope.entity.tbGoods.category2Id = -1;
+                        $scope.entity.tbGoods.category3Id = -1;
+                    })
+                }
+            }
+        });
+
+        //模板
+        $scope.$watch("entity.tbGoods.category3Id", function (newValue, oldValue) {
+            if(oldValue!=undefined) {
+                if (newValue != undefined) {
+                    itemCatService.findOne(newValue).success(function (res) {
+                        $scope.entity.tbGoods.typeTemplateId = res.typeId;
+                        $scope.entity.tbGoods.brandId = -1;
                     })
                 }
             }
 
         });
 
-        //三级分类列表
-        $scope.$watch("entity.tbGoods.category2Id", function (newValue, oldValue) {
-            if (newValue != undefined) {
-                itemCatService.findByParentId(newValue).success(function (res) {
-                    $scope.category3 = res;
-                    //$scope.entity.tbGoods.typeTemplateId = "";
-                    //$scope.brandList = [];
-                    $scope.entity.tbGoods.category3Id = -1;
-                })
-            }
-
-        });
-
-        //模板
-        $scope.$watch("entity.tbGoods.category3Id", function (newValue, oldValue) {
-            if (newValue != undefined) {
-                itemCatService.findOne(newValue).success(function (res) {
-                    $scope.entity.tbGoods.typeTemplateId = res.typeId;
-                    $scope.entity.tbGoods.brandId=-1;
-                })
-            }
-
-        });
-
         //品牌
         $scope.$watch("entity.tbGoods.typeTemplateId", function (newValue, oldValue) {
-            if (newValue != undefined && newValue!="") {
-                typeTemplateService.findOne(newValue).success(function (res) {
-                    //品牌列表
-                    $scope.brandList = JSON.parse(res.brandIds);
-                    //扩展属性
-                    $scope.entity.goodsDesc.customAttributeItems = JSON.parse(res.customAttributeItems);
-                });
-                //按模板id查规格
-                specificationService.findByTypeTemplateId(newValue).success(function (res) {
-                    $scope.specList = res;
-                });
-                $scope.entity.tbGoods.isEnableSpec = 0;
-            }
+                if (newValue != undefined && newValue != "") {
+                    typeTemplateService.findOne(newValue).success(function (res) {
+                        //品牌列表
+                        $scope.brandList = JSON.parse(res.brandIds);
+                        //扩展属性
+                        if(oldValue!=undefined) {
+                            $scope.entity.goodsDesc.customAttributeItems = JSON.parse(res.customAttributeItems);
+
+                        }
+                    });
+                    //按模板id查规格
+                    specificationService.findByTypeTemplateId(newValue).success(function (res) {
+                        $scope.specList = res;
+                    });
+                    if(oldValue!=undefined) {
+                        $scope.entity.tbGoods.isEnableSpec = 0;
+                    }else {
+                        $scope.entity.tbGoods.isEnableSpec = 1;
+                    }
+
+                }
         });
 
         //上传文件
@@ -244,14 +275,27 @@ app.controller('goodsController',
         $scope.updateMarketable = function (status) {
             if ($scope.selectIds.length == 0) {
                 alert("至少选择一个")
-            } else{
-                goodsService.updateMarketable($scope.selectIds,status).success(function (res) {
+            } else {
+                goodsService.updateMarketable($scope.selectIds, status).success(function (res) {
                     alert(res.message);
-                    if(res.success) {
+                    if (res.success) {
                         $scope.reloadList();
                         $scope.selectIds = [];
                     }
                 })
+            }
+        }
+        $scope.toEdit=function (id) {
+            location.href="goods_edit.html#?id="+id;
+        };
+        $scope.goBack=function (num) {
+            location.href="goods.html";
+        }
+        $scope.specContain=function (name) {
+            if($scope.specName.indexOf(name)>=0) {
+                return true;
+            }else {
+                return false;
             }
         }
     });

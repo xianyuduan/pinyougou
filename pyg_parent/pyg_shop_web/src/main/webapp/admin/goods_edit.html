@@ -207,7 +207,7 @@
                     <div class="row data-type">
                         <div class="col-md-2 title">是否启用规格</div>
                         <div class="col-md-10 data">
-                            <input type="checkbox" ng-click="initSpecAndItem()" ng-model="entity.tbGoods.isEnableSpec" ng-true-value="1" ng-false-value="0">
+                            <input type="checkbox" ng-click="initSpecAndItem()" ng-model="entity.tbGoods.isEnableSpec" ng-true-value="1" ng-false-value="0" ng-checked="entity.tbGoods.isEnableSpec==1">
                         </div>
                     </div>
                     <p>
@@ -221,7 +221,7 @@
                                 <div class="col-md-10 data">
                                     <span ng-repeat="option in spec.options">
 					                   <input ng-click="selectSpecs($event,spec.text,option.optionName);createItemList()"
-                                              type="checkbox">{{option.optionName}}
+                                              type="checkbox" ng-checked="specContain(option.optionName)">{{option.optionName}}
                                     </span>
                                 </div>
                             </div>
@@ -275,7 +275,7 @@
         </div>
         <div class="btn-toolbar list-toolbar">
             <button class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>保存</button>
-            <button class="btn btn-default">返回列表</button>
+            <button class="btn btn-default" ng-click="goBack(-1)">返回列表</button>
         </div>
 
 </section>
