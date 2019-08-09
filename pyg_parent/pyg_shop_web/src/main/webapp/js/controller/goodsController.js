@@ -79,14 +79,15 @@ app.controller('goodsController',
                     $scope.paginationConf.totalItems = response.total;// 更新总记录数
                 });
         };
-        $scope.entity = {
-            tbGoods: {},
-            goodsDesc: {itemImages: [], customAttributeItems: [], specificationItems: []},
-            itemList: [{spec: {}, price: 100, num: 9999, status: 0, isDefault: 0}]
-        };
+
 
         //一级分类列表
         $scope.findCategory1 = function (parentId) {
+            $scope.entity = {
+                tbGoods: {},
+                goodsDesc: {itemImages: [], customAttributeItems: [], specificationItems: []},
+                itemList: [{spec: {}, price: 100, num: 9999, status: 0, isDefault: 0}]
+            };
             itemCatService.findByParentId(parentId).success(function (res) {
                 $scope.category1 = res;
                 if($location.search().id!=undefined) {
@@ -101,7 +102,7 @@ app.controller('goodsController',
 
         //二级分类列表
         $scope.$watch('entity.tbGoods.category1Id', function (newValue, oldValue) {
-            if(oldValue!=undefined) {
+            if($scope.entity.tbGoods.id==undefined) {
                 if (newValue == -1) {
                     $scope.category2 = [];
                     $scope.entity.tbGoods.category2Id = -1;
@@ -121,7 +122,7 @@ app.controller('goodsController',
 
         //三级分类列表
         $scope.$watch("entity.tbGoods.category2Id", function (newValue, oldValue) {
-            if(oldValue!=undefined) {
+            if($scope.entity.tbGoods.id==undefined) {
                 if (newValue != undefined) {
                     itemCatService.findByParentId(newValue).success(function (res) {
                         $scope.category3 = res;
@@ -135,7 +136,7 @@ app.controller('goodsController',
 
         //模板
         $scope.$watch("entity.tbGoods.category3Id", function (newValue, oldValue) {
-            if(oldValue!=undefined) {
+            if($scope.entity.tbGoods.id==undefined) {
                 if (newValue != undefined) {
                     itemCatService.findOne(newValue).success(function (res) {
                         $scope.entity.tbGoods.typeTemplateId = res.typeId;
@@ -153,7 +154,7 @@ app.controller('goodsController',
                         //品牌列表
                         $scope.brandList = JSON.parse(res.brandIds);
                         //扩展属性
-                        if(oldValue!=undefined) {
+                        if($scope.entity.tbGoods.id==undefined) {
                             $scope.entity.goodsDesc.customAttributeItems = JSON.parse(res.customAttributeItems);
 
                         }
@@ -162,7 +163,7 @@ app.controller('goodsController',
                     specificationService.findByTypeTemplateId(newValue).success(function (res) {
                         $scope.specList = res;
                     });
-                    if(oldValue!=undefined) {
+                    if($scope.entity.tbGoods.id==undefined) {
                         $scope.entity.tbGoods.isEnableSpec = 0;
                     }else {
                         $scope.entity.tbGoods.isEnableSpec = 1;
