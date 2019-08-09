@@ -17,7 +17,7 @@ app.controller("seckillGoodsController",function($scope,$location,$controller,se
         if(id>0){
             seckillGoodsService.getOne(id).success(function (response) {
                 $scope.entity=response;
-
+                if (response.message)
                 //计算出剩余时间
                 var endTime = new Date($scope.entity.endTime).getTime();
                 var nowTime = new Date().getTime();
