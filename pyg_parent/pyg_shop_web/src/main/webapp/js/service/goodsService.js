@@ -8,7 +8,7 @@ app.service('goodsService',function($http){
 
 	//查询实体
 	this.findOne=function(id){
-		return $http.get('../goods/findOne/id='+id);
+		return $http.get('../goods/findOne/'+id);
 	};
 	//增加 
 	this.add=function(entity){
