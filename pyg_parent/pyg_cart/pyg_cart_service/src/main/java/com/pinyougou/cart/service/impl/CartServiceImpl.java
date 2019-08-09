@@ -30,7 +30,7 @@ public class CartServiceImpl implements CartService {
         List<Cart> cartList = (List<Cart>) redisTemplate.boundHashOps("cartList").get(key);
         //若是Redis没有,新建一个
         if (cartList == null) {
-            cartList = new ArrayList<>();
+            cartList = new ArrayList<Cart>();
         }
         return cartList;
     }

@@ -9,6 +9,6 @@
 <body>
 欢迎来到二品优购
 <%=request.getRemoteUser()%> <br>
-<a href="http://localhost:8080/cas/logout?service=http://ntlias-stu.boxuegu.com">退出登录</a>
+<a href="http://localhost:9006/cas/logout?service=http://ntlias-stu.boxuegu.com">退出登录</a>
 </body>
 </html>

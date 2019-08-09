@@ -2,7 +2,6 @@ package com.pinyougou.pay.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.wxpay.sdk.WXPayUtil;
-import com.oracle.xmlns.internal.webservices.jaxws_databinding.XmlOneway;
 import com.pinyougou.pay.service.WeiXinPayService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;

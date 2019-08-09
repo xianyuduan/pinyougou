@@ -39,7 +39,7 @@
     <!-- CAS入口点 开始 -->
     <bean id="casProcessingFilterEntryPoint" class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
         <!-- 单点登录服务器登录URL -->
-        <property name="loginUrl" value="http://localhost:8080/cas/login"/>
+        <property name="loginUrl" value="http://localhost:9006/cas/login"/>
         <property name="serviceProperties" ref="serviceProperties"/>
     </bean>
     <bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
@@ -67,7 +67,7 @@
         <!-- ticketValidator 为票据验证器 -->
         <property name="ticketValidator">
             <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
-                <constructor-arg index="0" value="http://localhost:8080/cas"/>
+                <constructor-arg index="0" value="http://localhost:9006/cas"/>
             </bean>
         </property>
         <property name="key" value="an_id_for_this_auth_provider_only"/>
@@ -79,7 +79,7 @@
     <!-- 单点登出  开始  -->
     <bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter"/>
     <bean id="requestSingleLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
-        <constructor-arg value="http://localhost:8080/cas/logout?service=http://localhost:8085"/>
+        <constructor-arg value="http://localhost:9006/cas/logout?service=http://localhost:8085"/>
         <constructor-arg>
             <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
         </constructor-arg>
