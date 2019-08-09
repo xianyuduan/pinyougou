@@ -80,7 +80,7 @@
 						<div class="cart-list" ng-repeat="orderItem in cart.orderItemList">
 							<ul class="goods-list yui3-g">
 								<li class="yui3-u-1-24">
-									<input type="checkbox" name="" id="" value="" />
+									<input type="checkbox" ng-click="updateSelection($event,orderItem)" />
 								</li>
 								<li class="yui3-u-11-24">
 									<div class="good-item">
@@ -122,7 +122,7 @@
 						<span><em>已节省：</em><i>-¥20.00</i></span>
 					</div>
 					<div class="sumbtn">
-						<a class="sum-btn" href="getOrderInfo.html" target="_blank">结算</a>
+						<a class="sum-btn" ng-click="upOrderItem()"target="_blank">结算</a>
 					</div>
 				</div>
 			</div>

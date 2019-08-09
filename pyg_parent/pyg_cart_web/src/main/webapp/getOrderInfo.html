@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="js/controller/cartController.js"></script>
 </head>
 
-<body ng-app="pyg" ng-controller="cartController" ng-init="findAddress();findCartList()">
+<body ng-app="pyg" ng-controller="cartController" ng-init="findAddress();findUpdataCartList()">
 	<!--head-->
 	<div class="top">
 		<div class="py-container">
@@ -215,8 +215,8 @@
 		<div class="order-summary">
 			<div class="static fr">
 				<div class="list">
-					<span><i class="number">{{totalNum}}</i>件商品，总商品金额</span>
-					<em class="allprice">¥{{totalFee}}</em>
+					<span><i class="number">{{totalValue.totalNum}}</i>件商品，总商品金额</span>
+					<em class="allprice">¥{{totalValue.totalMoney.toFixed(2)}}</em>
 				</div>
 				<div class="list">
 					<span>返现：</span>
@@ -229,7 +229,7 @@
 			</div>
 		</div>
 		<div class="clearfix trade">
-			<div class="fc-price">应付金额:　<span class="price">¥{{totalFee}}</span></div>
+			<div class="fc-price">应付金额:　<span class="price">¥{{totalValue.totalMoney.toFixed(2)}}</span></div>
 			<div class="fc-receiverInfo">寄送至:{{defaultAddress.address}} 收货人：{{defaultAddress.contact}} {{defaultAddress.mobile}}</div>
 		</div>
 		<div class="submit">

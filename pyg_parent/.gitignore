@@ -2,3 +2,5 @@ target
 *.iml
 .idea
 rebel.xml
+*.xml
+*..properties
