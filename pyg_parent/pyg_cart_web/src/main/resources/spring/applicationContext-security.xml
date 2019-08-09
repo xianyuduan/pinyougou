@@ -45,7 +45,7 @@
     </bean>
     <bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
         <!--service 配置自身工程的根地址+/login/cas   -->
-        <property name="service" value="http://192.168.147.94:8086/login/cas"/>
+        <property name="service" value="http://192.168.147.94:8080/login/cas"/>
     </bean>
     <!-- CAS入口点 结束 -->
     <!-- 认证过滤器 开始 -->
