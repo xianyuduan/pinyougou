@@ -1,23 +1,14 @@
 package com.pinyougou.shop.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.pinyougou.pojo.TbGoods;
-import com.pinyougou.sellergoods.service.GoodsService;
-import com.pinyougou.vo.Goods;
-import entity.PageResult;
+
 import entity.Result;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import utils.FastDFSClient;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * controller

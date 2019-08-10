@@ -1,4 +1,4 @@
-package com.pinyougou.sellergoods.service;
+package com.pinyougou.seckill.service;
 import java.util.List;
 import com.pinyougou.pojo.TbSeckillGoods;
 
@@ -22,8 +22,9 @@ public interface SeckillGoodsService {
 	 * @return
 	 */
 	public PageResult findPage(int pageNum, int pageSize);
-	
-	
+
+	public PageResult findPage1(int pageNum, int pageSize);
+
 	/**
 	 * 增加
 	*/
@@ -57,5 +58,6 @@ public interface SeckillGoodsService {
 	 * @return
 	 */
 	public PageResult findPage(TbSeckillGoods seckillGoods, int pageNum, int pageSize);
-	
+
+    void updateStatus(Long[] ids, String status);
 }

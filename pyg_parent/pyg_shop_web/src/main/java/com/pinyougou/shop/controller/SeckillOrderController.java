@@ -1,14 +1,13 @@
 package com.pinyougou.shop.controller;
 import java.util.List;
 
-import com.pinyougou.seckill.service.SeckillGoodsService;
+import com.pinyougou.seckill.service.SeckillOrderService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.pinyougou.pojo.TbSeckillGoods;
-
+import com.pinyougou.pojo.TbSeckillOrder;
 
 import entity.PageResult;
 import entity.Result;
@@ -18,19 +17,19 @@ import entity.Result;
  *
  */
 @RestController
-@RequestMapping("/seckillGoods")
-public class SeckillGoodsController {
+@RequestMapping("/seckillOrder")
+public class SeckillOrderController {
 
 	@Reference
-	private SeckillGoodsService seckillGoodsService;
+	private SeckillOrderService seckillOrderService;
 	
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
 	@RequestMapping("/findAll")
-	public List<TbSeckillGoods> findAll(){			
-		return seckillGoodsService.findAll();
+	public List<TbSeckillOrder> findAll(){			
+		return seckillOrderService.findAll();
 	}
 	
 	
@@ -40,18 +39,18 @@ public class SeckillGoodsController {
 	 */
 	@RequestMapping("/findPage/{page}/{rows}")
 	public PageResult  findPage(@PathVariable("page") int page, @PathVariable("rows")int rows){			
-		return seckillGoodsService.findPage(page, rows);
+		return seckillOrderService.findPage(page, rows);
 	}
 	
 	/**
 	 * 增加
-	 * @param seckillGoods
+	 * @param seckillOrder
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public Result add(@RequestBody TbSeckillGoods seckillGoods){
+	public Result add(@RequestBody TbSeckillOrder seckillOrder){
 		try {
-			seckillGoodsService.add(seckillGoods);
+			seckillOrderService.add(seckillOrder);
 			return new Result(true, "增加成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,13 +60,13 @@ public class SeckillGoodsController {
 	
 	/**
 	 * 修改
-	 * @param seckillGoods
+	 * @param seckillOrder
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbSeckillGoods seckillGoods){
+	public Result update(@RequestBody TbSeckillOrder seckillOrder){
 		try {
-			seckillGoodsService.update(seckillGoods);
+			seckillOrderService.update(seckillOrder);
 			return new Result(true, "修改成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,8 +80,8 @@ public class SeckillGoodsController {
 	 * @return
 	 */
 	@RequestMapping("/findOne/{id}")
-	public TbSeckillGoods findOne(@PathVariable("id") Long id){
-		return seckillGoodsService.findOne(id);		
+	public TbSeckillOrder findOne(@PathVariable("id") Long id){
+		return seckillOrderService.findOne(id);		
 	}
 	
 	/**
@@ -93,7 +92,7 @@ public class SeckillGoodsController {
 	@RequestMapping("/delete/{ids}")
 	public Result delete(@PathVariable("ids") Long [] ids){
 		try {
-			seckillGoodsService.delete(ids);
+			seckillOrderService.delete(ids);
 			return new Result(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,14 +102,14 @@ public class SeckillGoodsController {
 	
 		/**
 	 * 查询+分页
-	 * @param seckillGoods
+	 * @param seckillOrder
 	 * @param page
 	 * @param rows
 	 * @return
 	 */
 	@RequestMapping("/search/{page}/{rows}")
-	public PageResult search(@RequestBody TbSeckillGoods seckillGoods, @PathVariable("page") int page,  @PathVariable("rows") int rows  ){
-		return seckillGoodsService.findPage(seckillGoods, page, rows);		
+	public PageResult search(@RequestBody TbSeckillOrder seckillOrder, @PathVariable("page") int page,  @PathVariable("rows") int rows  ){
+		return seckillOrderService.findPage(seckillOrder, page, rows);		
 	}
 	
 }

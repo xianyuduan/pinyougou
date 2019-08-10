@@ -1,4 +1,4 @@
-package com.pinyougou.shop.controller;
+package com.pinyougou.manager.controller;
 import java.util.List;
 
 import com.pinyougou.seckill.service.SeckillGoodsService;
@@ -38,9 +38,9 @@ public class SeckillGoodsController {
 	 * 返回全部列表
 	 * @return
 	 */
-	@RequestMapping("/findPage/{page}/{rows}")
-	public PageResult  findPage(@PathVariable("page") int page, @PathVariable("rows")int rows){			
-		return seckillGoodsService.findPage(page, rows);
+	@RequestMapping("/findPage1/{page}/{rows}")
+	public PageResult  findPage1(@PathVariable("page") int page, @PathVariable("rows")int rows){
+		return seckillGoodsService.findPage1(page, rows);
 	}
 	
 	/**
@@ -111,6 +111,18 @@ public class SeckillGoodsController {
 	@RequestMapping("/search/{page}/{rows}")
 	public PageResult search(@RequestBody TbSeckillGoods seckillGoods, @PathVariable("page") int page,  @PathVariable("rows") int rows  ){
 		return seckillGoodsService.findPage(seckillGoods, page, rows);		
+	}
+
+	@RequestMapping("/updateStatus/{ids}/{status}")
+	public Result updateStatus(@PathVariable("ids") Long ids[], @PathVariable("status") String status) {
+		try {
+			seckillGoodsService.updateStatus(ids, status);
+			return new Result(true, "操作成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "操作失败");
+		}
+
 	}
 	
 }

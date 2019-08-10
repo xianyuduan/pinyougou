@@ -1,5 +1,8 @@
-package com.pinyougou.sellergoods.service.impl;
+package com.pinyougou.seckill.service.impl;
 import java.util.List;
+
+import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.seckill.service.SeckillGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
@@ -8,7 +11,6 @@ import com.pinyougou.mapper.TbSeckillGoodsMapper;
 import com.pinyougou.pojo.TbSeckillGoods;
 import com.pinyougou.pojo.TbSeckillGoodsExample;
 import com.pinyougou.pojo.TbSeckillGoodsExample.Criteria;
-import com.pinyougou.sellergoods.service.SeckillGoodsService;
 import org.springframework.transaction.annotation.Transactional;
 
 import entity.PageResult;
@@ -38,10 +40,20 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
 	 */
 	@Override
 	public PageResult findPage(int pageNum, int pageSize) {
-		PageHelper.startPage(pageNum, pageSize);		
-		Page<TbSeckillGoods> page=   (Page<TbSeckillGoods>) seckillGoodsMapper.selectByExample(null);
+		PageHelper.startPage(pageNum, pageSize);
+        Page<TbSeckillGoods> page=   (Page<TbSeckillGoods>) seckillGoodsMapper.selectByExample(null);
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+
+    @Override
+    public PageResult findPage1(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        TbSeckillGoodsExample example=new TbSeckillGoodsExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo("0");
+        Page<TbSeckillGoods> page=   (Page<TbSeckillGoods>) seckillGoodsMapper.selectByExample(example);
+        return new PageResult(page.getTotal(), page.getResult());
+    }
 
 	/**
 	 * 增加
@@ -110,5 +122,16 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
 		Page<TbSeckillGoods> page= (Page<TbSeckillGoods>)seckillGoodsMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+    //审核通过
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        TbSeckillGoods seckillGoods=new TbSeckillGoods();
+        seckillGoods.setStatus(status);
+        for (Long id : ids) {
+            seckillGoods.setId(id);
+            seckillGoodsMapper.updateByPrimaryKeySelective(seckillGoods);
+        }
+    }
+
 }
