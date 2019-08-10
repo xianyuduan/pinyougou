@@ -9,6 +9,6 @@
 <body>
 欢迎来到一品优购
 <%=request.getRemoteUser()%> <br>
-<a href="http://localhost:8080/cas/logout">退出登录</a>
+<a href="http://localhost:9006/cas/logout">退出登录</a>
 </body>
 </html>

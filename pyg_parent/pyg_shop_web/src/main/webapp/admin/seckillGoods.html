@@ -11,21 +11,19 @@
     <link rel="stylesheet" href="../css/style.css">
 	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
-    
+
     <script type="text/javascript" src="../plugins/angularjs/angular.min.js">  </script>
-    <!-- 分页组件开始 -->
-	<script src="../plugins/angularjs/pagination.js"></script>
-	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
-	<!-- 分页组件结束 -->
-    
-    
-    <script type="text/javascript" src="../js/base_pagination.js">  </script>
-    <script type="text/javascript" src="../js/service/seckillGoodsController.js">  </script>
-    <script type="text/javascript" src="../js/controller/baseController.js">  </script>
-    <script type="text/javascript" src="../js/controller/seckillGoodsController.js">  </script>
-    
+
+    <link rel="stylesheet" href="./../plugins/angularjs/pagination.css">
+    <script src="../plugins/angularjs/pagination.js"></script>
+    <script src="../js/base_pagination.js"></script>
+    <script src="../js/service/seckillGoodsService.js"></script>
+    <script src="../js/service/uploadService.js"></script>
+    <script src="../js/controller/baseController.js"></script>
+    <script src="../js/controller/seckillGoodsController.js"></script>
+
 </head>
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="seckillGoodsController" >
+<body class="hold-transition skin-red sidebar-mini" ng-app="pyg" ng-controller="seckillGoodsController">
   <!-- .box-body -->
                     <div class="box-header with-border">
                         <h3 class="box-title">管理</h3>
@@ -86,7 +84,7 @@
                              <td>{{entity.goodsId}}</td>			
                              <td>{{entity.itemId}}</td>			
                              <td>{{entity.title}}</td>			
-                             <td>{{entity.smallPic}}</td>			
+                             <td>{{entity.smallPic}}</td>
                              <td>{{entity.price}}</td>			
                              <td>{{entity.costPrice}}</td>			
                              <td>{{entity.sellerId}}</td>			
@@ -147,12 +145,24 @@
 		      	<tr>
                              
 <td>商品图片</td>
-
-                             <td><input  class="form-control" ng-model="entity.smallPic" placeholder="商品图片" ></td>
-
-                        </tr>		
-		      	<tr>
-                             
+ <tr>
+                        <td>商品图片</td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="file" id="file"/>
+                                        <button class="btn btn-primary" type="button" ng-click="uploadFile()">
+                                            上传
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <img src={{img.url}} width="200px" height="200px">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 <td>原价格</td>
 
                              <td><input  class="form-control" ng-model="entity.price" placeholder="原价格" ></td>
@@ -172,51 +182,26 @@
                              <td><input  class="form-control" ng-model="entity.sellerId" placeholder="商家ID" ></td>
 
                         </tr>		
-		      	<tr>
-                             
-<td>添加日期</td>
 
-                             <td><input  class="form-control" ng-model="entity.createTime" placeholder="添加日期" ></td>
-
-                        </tr>		
-		      	<tr>
-                             
-<td>审核日期</td>
-
-                             <td><input  class="form-control" ng-model="entity.checkTime" placeholder="审核日期" ></td>
-
-                        </tr>		
-		      	<tr>
-                             
-<td>审核状态</td>
-
-                             <td><input  class="form-control" ng-model="entity.status" placeholder="审核状态" ></td>
-
-                        </tr>		
 		      	<tr>
                              
 <td>开始时间</td>
 
-                             <td><input  class="form-control" ng-model="entity.startTime" placeholder="开始时间" ></td>
+                             <td><input type="date" ng-model="entity.startTime" placeholder="开始时间" ></td>
 
                         </tr>		
 		      	<tr>
                              
 <td>结束时间</td>
 
-                             <td><input  class="form-control" ng-model="entity.endTime" placeholder="结束时间" ></td>
+                             <td><input  type="date" ng-model="entity.endTime" placeholder="结束时间" ></td>
 
                         </tr>		
 		      	<tr>
                              
 <td>秒杀商品数</td>
 
-                             <td><input  class="form-control" ng-model="entity.num" placeholder="秒杀商品数" ></td>
 
-                        </tr>		
-		      	<tr>
-                             
-<td>剩余库存数</td>
 
                              <td><input  class="form-control" ng-model="entity.stockCount" placeholder="剩余库存数" ></td>
 

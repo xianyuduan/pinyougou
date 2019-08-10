@@ -63,6 +63,6 @@ app.controller("contentController", function ($scope, $http, contentService, $co
         if($scope.keywords==''){
             $scope.keywords='华为'
         }
-        location.href='http://search.pinyougou.com/search.html#?keywords='+$scope.keywords
+        location.href='http://localhost:8084/search.html#?keywords='+$scope.keywords
     }
 });

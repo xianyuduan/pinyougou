@@ -14,6 +14,25 @@
       <groupId>cn.itcast</groupId>  
       <artifactId>pyg_sellergoods_interface</artifactId>  
       <version>1.0-SNAPSHOT</version> 
-    </dependency> 
-  </dependencies> 
+    </dependency>
+    <dependency>
+      <groupId>cn.itcast</groupId>
+      <artifactId>pyg_seckill_interface</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <configuration>
+          <!-- 指定端口 -->
+          <port>8082</port>
+          <!-- 请求路径 -->
+          <path>/</path>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

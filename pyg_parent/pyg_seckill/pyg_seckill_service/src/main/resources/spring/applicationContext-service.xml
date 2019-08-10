@@ -16,7 +16,7 @@
 	<!-- 服务系统在dubbo中的名称，服务系统之间不能重复 -->
 	<dubbo:application name="pinyougou-seckill-service"/>
 	<!-- 注册中心地址 -->
-    <dubbo:registry address="zookeeper://192.168.147.222:2181"/>
+    <dubbo:registry address="zookeeper://192.168.25.128:2181"/>
 	<!-- 扫描service注解，将该注解所在类发布成服务 -->
     <dubbo:annotation package="com.pinyougou.seckill.service.impl" />
 	<!-- 服务系统访问注册中心的超时时间 -->

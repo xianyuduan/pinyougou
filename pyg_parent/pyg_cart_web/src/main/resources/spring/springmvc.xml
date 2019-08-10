@@ -25,8 +25,8 @@
 	<mvc:default-servlet-handler/>
 
 	<!-- 引用dubbo 服务 -->
+
 	<dubbo:application name="pinyougou-cart-web" />
-	<dubbo:registry address="zookeeper://192.168.147.222:2181"/>
+	<dubbo:registry address="zookeeper://192.168.25.128:2181"/>
 	<dubbo:annotation package="com.pinyougou.cart.controller" />
-	<dubbo:consumer check="false"/>
 </beans>
