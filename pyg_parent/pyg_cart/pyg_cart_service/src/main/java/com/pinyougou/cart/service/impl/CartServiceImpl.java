@@ -9,6 +9,7 @@ import com.pinyougou.vo.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,11 +28,17 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     public List<Cart> findCartListByKey(String key) {
-        List<Cart> cartList = (List<Cart>) redisTemplate.boundHashOps("cartList").get(key);
-        //若是Redis没有,新建一个
-        if (cartList == null) {
-            cartList = new ArrayList<Cart>();
+        List<Cart> cartList =new ArrayList<>();
+        try {
+           cartList = (List<Cart>) redisTemplate.boundHashOps("cartList").get(key);
+            if(ObjectUtils.isEmpty(cartList)){
+                return  new ArrayList<Cart>();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return  new ArrayList<Cart>();
         }
+
         return cartList;
     }
 
@@ -157,6 +164,17 @@ public class CartServiceImpl implements CartService {
     @Override
     public void deleteListByKey(String cartListByKey) {
         redisTemplate.boundHashOps("cartList").delete(cartListByKey);
+    }
+
+    @Override
+    public void saveupOrderItem(List<TbOrderItem> cartListUp, String sessionId) {
+        redisTemplate.boundHashOps("upOrderItem").put("kk"+sessionId,cartListUp);
+    }
+
+    @Override
+    public List<TbOrderItem> findUpdataCartList(String session) {
+        List<TbOrderItem> orderItemList = (List<TbOrderItem>) redisTemplate.boundHashOps("upOrderItem").get("kk" + session);
+        return orderItemList;
     }
 
 

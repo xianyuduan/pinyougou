@@ -210,6 +210,10 @@ public final class CookieUtil {
             if(serverName.contains("127.0.0.1")){
                 return "localhost";
             }
+            if(serverName.contains("192.168.147.94")){
+                return "localhost";
+            }
+
 
             if (len > 3) {
                 // www.xxx.com.cn

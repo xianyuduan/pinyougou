@@ -1,5 +1,6 @@
 package com.pinyougou.cart.service;
 
+import com.pinyougou.pojo.TbOrderItem;
 import com.pinyougou.vo.Cart;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface CartService {
     List<Cart> mergeList(List<Cart> cartListByUsername, List<Cart> cartListByKey);
 
     void deleteListByKey(String cartListByKey);
+
+    void saveupOrderItem(List<TbOrderItem> cartListUp, String sessionId);
+
+    List<TbOrderItem> findUpdataCartList(String session);
 }
